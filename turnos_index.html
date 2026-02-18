@@ -1,0 +1,481 @@
+
+<?php
+include 'connection.php';
+include 'reservas.php';
+include 'config.php';
+include '';
+?>
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>CALM Odontología | Odontología con Conciencia | Pilar, Buenos Aires</title>
+      <meta name="description" content="CALM Odontología - Centro odontológico con más de 20 años de experiencia en Manuel Alberti, Pilar. Prótesis dentales, ortodoncia, endodoncia, urgencias 24/7. Laboratorio dental propio." />
+      <meta name="keywords" content="dentista pilar, odontólogo manuel alberti, prótesis dentales, ortodoncia, urgencias dentales, CALM odontología" />
+      <meta property="og:title" content="CALM Odontología | Odontología con Conciencia" />
+      <meta property="og:description" content="Centro odontológico con más de 20 años de experiencia. Prótesis, ortodoncia, endodoncia y urgencias 24/7." />
+      <meta property="og:type" content="website" />
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+      <link rel="stylesheet" href="styles.css" />
+      <!-- Favicon -->
+        <link rel="icon" type="image/x-icon" href="/imagenes/logo.png?height=32&width=32"
+            class="img-fluid rounded-circle" />
+
+    <title>Turnero Online</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+        
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            color: #555;
+            font-weight: 600;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .servicio-item {
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .servicio-item:hover {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .servicio-item.selected {
+            border-color: #667eea;
+            background: #e8eaff;
+        }
+        
+        .servicio-nombre {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .servicio-detalle {
+            color: #777;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        
+        .horario-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+        
+        .horario-btn {
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+        
+        .horario-btn:hover:not(:disabled) {
+            border-color: #667eea;
+            background: #f8f9ff;
+        }
+        
+        .horario-btn.selected {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+        
+        .horario-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .mensaje {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .mensaje-exito {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .mensaje-error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .tabs {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 15px;
+            background: #f0f0f0;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .tab:first-child {
+            border-radius: 8px 0 0 8px;
+        }
+        
+        .tab:last-child {
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .tab.active {
+            background: #667eea;
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📅 Turnero Online</h1>
+        
+        <?php if (isset($mensaje)): ?>
+            <div class="mensaje <?php echo $mensaje_tipo; ?>">
+                <?php echo $mensaje; ?>
+            </div>
+        <?php endif; ?>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('reservar')">Reservar Turno</button>
+            <button class="tab" onclick="switchTab('mis-turnos')">Mis Turnos</button>
+        </div>
+        
+        <div id="reservar" class="tab-content active">
+            <div class="card">
+                <h2>Seleccionar Servicio</h2>
+                <form method="POST" id="form-turno">
+                    <input type="hidden" name="servicio_id" id="servicio_id" required>
+                    <input type="hidden" name="fecha" id="fecha" required>
+                    <input type="hidden" name="hora" id="hora" required>
+
+                    <div id="lista-servicios">
+                        <?php
+                        $conn = new mysqli($host, $user, $password, $database);
+                        $result = $conn->query("SELECT * FROM servicios");
+                        while ($servicio = $result->fetch_assoc()): ?>
+                            <div class="servicio-item" onclick="selectServicio(<?php echo $servicio['id']; ?>, '<?php echo $servicio['nombre']; ?>', <?php echo $servicio['duracion']; ?>, <?php echo $servicio['precio']; ?>)">
+                                <div class="servicio-nombre"><?php echo $servicio['nombre']; ?></div>
+                                <div class="servicio-detalle">Duración: <?php echo $servicio['duracion']; ?> min - $<?php echo number_format($servicio['precio'], 2); ?></div>
+                            </div>
+                        <?php endwhile; $conn->close(); ?>
+                    </div>
+
+            </div>
+            
+            <div class="card" id="step-fecha" style="display:none;">
+                <h2>Seleccionar Fecha</h2>
+                <div class="form-group">
+                    <label for="fecha-turno">Fecha:</label>
+                    <input type="date" id="fecha-turno" name="fecha-turno" min="<?php echo date('Y-m-d'); ?>" onchange="cargarHorarios()">
+                </div>
+                <div id="horarios"></div>
+            </div>
+            
+            <div class="card" id="step-datos" style="display:none;">
+                <h2>Datos del Cliente</h2>
+                <div class="form-group">
+                    <label for="nombre">Nombre completo:</label>
+                    <input type="text" id="nombre" name="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono:</label>
+                    <input type="tel" id="telefono" name="telefono" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+                <button type="submit" name="reservar" class="btn">Confirmar Turno</button>
+            </div>
+        </div>
+        
+        <div id="mis-turnos" class="tab-content">
+            <div class="card">
+                <h2>Consultar Mi Turno</h2>
+                <form method="POST">
+                    <div class="form-group">
+                        <label for="buscar_telefono">Teléfono:</label>
+                        <input type="tel" id="buscar_telefono" name="telefono" required>
+                    </div>
+                    <button type="submit" name="buscar" class="btn">Buscar Turno</button>
+                </form>
+                
+                <?php
+                if (isset($_POST['buscar'])) {
+                    $conn = new mysqli($host, $user, $password, $database);
+                    $telefono = $_POST['telefono'];
+                    $result = $conn->query("SELECT t.*, s.nombre as servicio_nombre 
+                        FROM turnos t 
+                        LEFT JOIN servicios s ON t.servicio_id = s.id 
+                        WHERE t.cliente_telefono = '$telefono' 
+                        ORDER BY t.fecha DESC, t.hora DESC");
+                    
+                    if ($result->num_rows > 0) {
+                        echo "<h3 style='margin-top:20px;'>Tus turnos:</h3>";
+                        while ($turno = $result->fetch_assoc()) {
+                            $estado_color = $turno['estado'] == 'confirmado' ? 'green' : ($turno['estado'] == 'cancelado' ? 'red' : 'gray');
+                            echo "<div style='padding:15px; border:1px solid #ddd; margin:10px 0; border-radius:8px;'>";
+                            echo "<strong>{$turno['servicio_nombre']}</strong><br>";
+                            echo "Fecha: " . date('d/m/Y', strtotime($turno['fecha'])) . " a las {$turno['hora']}<br>";
+                            echo "Estado: <span style='color:$estado_color;font-weight:bold;'>{$turno['estado']}</span>";
+                            echo "</div>";
+                        }
+                    } else {
+                        echo "<p style='margin-top:20px;'>No se encontraron turnos con ese teléfono.</p>";
+                    }
+                    $conn->close();
+                }
+                ?>
+            </div>
+        </div>
+    </div>
+<!-- ============================================
+     FOOTER
+     ============================================ -->
+<footer class="footer" id="contacto">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <!-- Brand -->
+        <div class="footer-brand">
+          <div class="nav-logo">
+            <div class="nav-logo-icon">C</div>
+            <div class="nav-logo-text">
+              <strong style="color:#fff">CALM</strong>
+              <span>Odontología</span>
+            </div>
+          </div>
+          <p>Odontología con Conciencia. Más de 20 años cuidando sonrisas con calidez humana, profesionalismo y transparencia.</p>
+          <div class="footer-socials">
+            <a href="https://www.instagram.com/calm.odontologia/" target="_blank" rel="noopener noreferrer" class="footer-social" aria-label="Instagram">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+            </a>
+            <a href="https://wa.me/541123862846?text=Hola%2C%20quiero%20pactar%20un%20turno" target="_blank" rel="noopener noreferrer" class="footer-social whatsapp" aria-label="WhatsApp">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contact -->
+        <div class="footer-col">
+          <h4>Contacto</h4>
+          <a href="tel:+541123862846" class="footer-contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            <span>(+54) 11 2386-2846</span>
+          </a>
+          <div class="footer-contact-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            <span>Padre Roqueta 1677, Manuel Alberti, Pilar, Buenos Aires</span>
+          </div>
+        </div>
+
+        <!-- Hours -->
+        <div class="footer-col">
+          <h4>Horarios</h4>
+          <div class="footer-schedule">
+            <div class="footer-schedule-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <div>
+                <p class="days">Lunes, Miércoles y Viernes</p>
+                <p class="hours">19:00 a 22:30 hs</p>
+              </div>
+            </div>
+            <div class="footer-schedule-item">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+              <div>
+                <p class="days">Martes y Jueves</p>
+                <p class="hours">14:00 a 22:30 hs</p>
+              </div>
+            </div>
+            <div class="footer-urgency">
+              <div class="footer-urgency-dot"></div>
+              <span>Urgencias 24/7</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map -->
+        <div class="footer-col">
+          <a href="../turnos_admin.html" target="_blank" rel="noopener noreferrer" class="btn-cta">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Administrador
+      </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container">
+      <p>&copy; 2026 CALM Odontología. Todos los derechos reservados.</p>
+      <p>Padre Roqueta 1677, Manuel Alberti, Pilar, Buenos Aires</p>
+    </div>
+  </div>
+</footer>
+
+    
+    <script>
+        let servicioSeleccionado = null;
+        let duracionServicio = 0;
+        
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+        
+        function selectServicio(id, nombre, duracion, precio) {
+            document.querySelectorAll('.servicio-item').forEach(s => s.classList.remove('selected'));
+            event.currentTarget.classList.add('selected');
+            
+            servicioSeleccionado = id;
+            duracionServicio = duracion;
+            document.getElementById('servicio_id').value = id;
+            document.getElementById('step-fecha').style.display = 'block';
+            document.getElementById('step-datos').style.display = 'none';
+        }
+        
+        function cargarHorarios() {
+            const fecha = document.getElementById('fecha-turno').value;
+            if (!fecha) return;
+            
+            document.getElementById('fecha').value = fecha;
+            
+            // Generate available times
+            const horarios = [];
+            for (let h = 9; h <= 18; h++) {
+                for (let m = 0; m < 60; m += duracionServicio) {
+                    if (h + m/60 <= 18) {
+                        let hora = h.toString().padStart(2, '0') + ':' + m.toString().padStart(2, '0');
+                        horarios.push(hora);
+                    }
+                }
+            }
+            
+            let html = '<div class="horario-grid">';
+            horarios.forEach(hora => {
+                html += `<button type="button" class="horario-btn" onclick="selectHora('${hora}')">${hora}</button>`;
+            });
+            html += '</div>';
+            
+            document.getElementById('horarios').innerHTML = html;
+        }
+        
+        function selectHora(hora) {
+            document.querySelectorAll('.horario-btn').forEach(b => b.classList.remove('selected'));
+            event.target.classList.add('selected');
+            document.getElementById('hora').value = hora;
+            document.getElementById('step-datos').style.display = 'block';
+        }
+    </script>
+    
+</body>
+    
+    
+</html>
